@@ -1,0 +1,72 @@
+{
+   glibc_dl_open_cache
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   fun:*alloc
+   ...
+   fun:_dl_open
+}
+{
+   glibc_dl_catch_error_cache
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   fun:*alloc
+   ...
+   fun:_dl_catch_error
+}
+{
+   systemd_bus_cache
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   fun:*alloc
+   ...
+   obj:*/libsystemd.so*
+}
+{
+   pam_core_cache
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   fun:*alloc
+   ...
+   obj:*/libpam.so*
+}
+{
+   pam_modules_cache
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   fun:*alloc
+   ...
+   obj:*/security/pam_*.so*
+}
+{
+   nss_glibc_cache
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   fun:*alloc
+   ...
+   obj:*/libnss_*.so*
+}
+{
+   crypt_suppression
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   fun:*alloc
+   ...
+   obj:*/libcrypt*.so*
+}
+{
+   glibc_tls_allocate_dtv
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   fun:*alloc
+   ...
+   fun:allocate_dtv
+}
+{
+   glibc_dl_allocate_tls
+   Memcheck:Leak
+   match-leak-kinds: reachable,possible
+   fun:*alloc
+   ...
+   fun:_dl_allocate_tls
+}
