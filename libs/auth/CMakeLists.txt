@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.23)
 
 project(
   AuthLib
-  LANGUAGES C
+  LANGUAGES CXX
   DESCRIPTION "Authentication library"
 )
 
@@ -29,30 +29,29 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(SYSTEMD REQUIRED IMPORTED_TARGET libsystemd)
 pkg_check_modules(PAM REQUIRED IMPORTED_TARGET pam)
 
-
 # Main Library Target
 add_library(authLib)
 add_library(authLib::authLib ALIAS authLib)
 
 target_sources(authLib
   PRIVATE
-    src/fingerprint.c
-    src/password.c
+    src/fingerprint.cpp
+    src/password.cpp
   PUBLIC
     FILE_SET HEADERS
     BASE_DIRS
       include
     FILES
-      include/auth/fingerprint.h
-      include/auth/password.h
+      include/auth/fingerprint.hpp
+      include/auth/password.hpp
 )
 
 # Standard and Compilation Flags
-target_compile_features(authLib PUBLIC c_std_11)
+target_compile_features(authLib PUBLIC cxx_std_23)
 
 target_compile_options(authLib
   PRIVATE
-    $<$<C_COMPILER_ID:GNU,Clang,AppleClang>:
+    $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:
       -Wall
       -Wextra
       -Wpedantic
@@ -83,14 +82,14 @@ if(AUTHLIB_BUILD_EXAMPLES)
 
   target_sources(authlib_example
     PRIVATE
-      example/main.c
+      example/main.cpp
   )
 
-  target_compile_features(authlib_example PRIVATE c_std_11)
+  target_compile_features(authlib_example PRIVATE cxx_std_23)
 
   target_compile_options(authlib_example
     PRIVATE
-      $<$<C_COMPILER_ID:GNU,Clang,AppleClang>:-Wall -Wextra -Wpedantic>
+      $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall -Wextra -Wpedantic>
   )
 
   target_link_libraries(authlib_example
@@ -99,5 +98,4 @@ if(AUTHLIB_BUILD_EXAMPLES)
   )
 
   include(GNUInstallDirs)
-
 endif()
